@@ -15,7 +15,8 @@ MonoBehaviour:
   version: 0.3.1
   isOpen: 0
   startPosition: 0
-  inputActionAsset: {fileID: 0}
+  inputActionAsset: {fileID: -944628639613478452, guid: 1d8d20617bbfd3f4aaaf22598276c59a,
+    type: 3}
   maxInfoCount: 500
   worldPositionStep: 1
   localPositionStep: 1
