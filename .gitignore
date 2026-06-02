@@ -7,6 +7,8 @@
 /MRFlagHunter/[Ll]ogs/
 /MRFlagHunter/[Uu]ser[Ss]ettings/
 /MRFlagHunter/ExternalPackages/
+/MRFlagHunter/Packages/
+
 # Other
 .vs/
 .vscode/
