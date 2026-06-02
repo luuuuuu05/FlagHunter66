@@ -1,12 +1,12 @@
 # Unity
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
-/ExternalPackages/
+/MRFlagHunter/[Ll]ibrary/
+/MRFlagHunter/[Tt]emp/
+/MRFlagHunter/[Oo]bj/
+/MRFlagHunter/[Bb]uild/
+/MRFlagHunter/[Bb]uilds/
+/MRFlagHunter/[Ll]ogs/
+/MRFlagHunter/[Uu]ser[Ss]ettings/
+/MRFlagHunter/ExternalPackages/
 # Other
 .vs/
 .vscode/
