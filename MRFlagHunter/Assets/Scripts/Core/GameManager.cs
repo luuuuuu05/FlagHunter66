@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ResultPanel resultPanel;
     [SerializeField] private float gameDuration = 60f;
 
-    public bool IsPlaying { get; private set; }
+    public GameState CurrentState { get; private set; } = GameState.Waiting;
 
     private void Awake()
     {
@@ -25,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        IsPlaying = true;
+        CurrentState = GameState.Playing;
         ScoreManager.Instance.ResetScore();
         gameTimer.StartTimer(gameDuration);
         resultPanel.Hide();
@@ -33,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        IsPlaying = false;
+        CurrentState = GameState.GameOver;
         resultPanel.Show(ScoreManager.Instance.Score);
     }
 }

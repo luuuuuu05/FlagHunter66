@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,7 +6,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float lookSensitivity = 2f;
     [SerializeField] private Camera playerCamera;
 
+    [SerializeField] private MonoBehaviour playerInputSource;
+    private IPlayerInput playerInput;
+
     private float xRotation;
+
+    private void Awake()
+    {
+        if (playerInputSource != null)
+            playerInput = playerInputSource as IPlayerInput;
+    }
 
     private void Start()
     {
@@ -20,23 +27,34 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
-        HandleLook();
+        Vector2 move;
+        Vector2 look;
+
+        if (playerInput != null)
+        {
+            move = playerInput.Move;
+            look = playerInput.Look;
+        }
+        else
+        {
+            move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        }
+
+        HandleMovement(move);
+        HandleLook(look);
     }
 
-    private void HandleMovement()
+    private void HandleMovement(Vector2 moveInput)
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
         transform.position += move * moveSpeed * Time.deltaTime;
     }
 
-    private void HandleLook()
+    private void HandleLook(Vector2 lookInput)
     {
-        float mouseX = Input.GetAxis("Mouse X") * lookSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * lookSensitivity;
+        float mouseX = lookInput.x * lookSensitivity;
+        float mouseY = lookInput.y * lookSensitivity;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);

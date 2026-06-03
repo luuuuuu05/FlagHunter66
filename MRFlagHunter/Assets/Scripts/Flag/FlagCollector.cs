@@ -1,25 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlagCollector : MonoBehaviour
 {
     public float collectDistance = 1.0f;
 
+    [SerializeField] private MonoBehaviour playerInputSource;
+    private IPlayerInput playerInput;
+
+    private void Awake()
+    {
+        if (playerInputSource != null)
+            playerInput = playerInputSource as IPlayerInput;
+    }
+
     void Update()
     {
-        bool triggerPressed =
-            Input.GetKeyDown(KeyCode.J);
+        bool triggerPressed = playerInput != null
+            ? playerInput.CollectTriggered
+            : Input.GetKeyDown(KeyCode.J);
 
         if (triggerPressed)
-        {
             TryCollect();
-        }
     }
 
     void TryCollect()
     {
-        if (GameManager.Instance != null && !GameManager.Instance.IsPlaying)
+        if (GameManager.Instance != null
+            && GameManager.Instance.CurrentState != GameState.Playing)
             return;
 
         Flag[] flags = FindObjectsOfType<Flag>();
@@ -33,14 +40,17 @@ public class FlagCollector : MonoBehaviour
 
             if (distance < collectDistance)
             {
+                ICollectable collectable = flag;
+
                 FlagType flagType = flag.GetComponent<FlagType>();
                 int scoreValue = flagType != null
                     ? flagType.GetScore()
-                    : flag.score;
+                    : collectable.ScoreValue;
 
                 ScoreManager.Instance.AddScore(scoreValue);
 
-                Destroy(flag.gameObject);
+                collectable.OnCollected();
+                Destroy(collectable.GameObject);
 
                 FlagSpawner.Instance.FlagCollected();
 

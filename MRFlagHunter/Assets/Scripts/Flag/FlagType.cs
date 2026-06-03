@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum FlagRarity
@@ -11,7 +9,9 @@ public enum FlagRarity
 
 public class FlagType : MonoBehaviour
 {
-    public FlagRarity rarity = FlagRarity.Common;
+    [SerializeField] private FlagRarity rarity = FlagRarity.Common;
+
+    public FlagRarity Rarity => rarity;
 
     public int GetScore()
     {
