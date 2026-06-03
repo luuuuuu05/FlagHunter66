@@ -4,15 +4,51 @@ using UnityEngine;
 
 public class FlagSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static FlagSpawner Instance;
+
+    public GameObject goldFlagPrefab;
+
+    public Transform[] spawnPoints;
+
+    private readonly List<GameObject> activeFlags =
+        new();
+
+    private void Awake()
     {
-        
+        Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        SpawnFlag();
+    }
+
+    public void SpawnFlag()
+    {
+        int index =
+            Random.Range(0, spawnPoints.Length);
+
+        Transform point =
+            spawnPoints[index];
+
+        GameObject flag =
+            Instantiate(
+                goldFlagPrefab,
+                point.position,
+                Quaternion.identity);
+
+        activeFlags.Add(flag);
+    }
+
+    public void FlagCollected()
+    {
+        StartCoroutine(Respawn());
+    }
+
+    IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(2f);
+
+        SpawnFlag();
     }
 }

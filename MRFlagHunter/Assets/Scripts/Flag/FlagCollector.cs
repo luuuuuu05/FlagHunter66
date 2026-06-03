@@ -8,6 +8,17 @@ public class FlagCollector : MonoBehaviour
 
     void Update()
     {
+        bool triggerPressed =
+            Input.GetKeyDown(KeyCode.J);
+
+        if (triggerPressed)
+        {
+            TryCollect();
+        }
+    }
+
+    void TryCollect()
+    {
         Flag[] flags = FindObjectsOfType<Flag>();
 
         foreach (var flag in flags)
@@ -23,7 +34,7 @@ public class FlagCollector : MonoBehaviour
 
                 Destroy(flag.gameObject);
 
-                Debug.Log("»ñµÃÆìÖÄ");
+                FlagSpawner.Instance.FlagCollected();
 
                 break;
             }

@@ -13,9 +13,16 @@ public class ScoreManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        HUDController.Instance.UpdateScore(0);
+    }
+
     public void AddScore(int value)
     {
         Score += value;
+
+        HUDController.Instance.UpdateScore(Score);
 
         Debug.Log("当前分数：" + Score);
     }
