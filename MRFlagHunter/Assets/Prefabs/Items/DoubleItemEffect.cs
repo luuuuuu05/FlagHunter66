@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class DoubleItemEffect : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Vector3 startPos;
+
+    public float floatHeight = 0.15f;
+    public float floatSpeed = 2f;
+
+    public float rotateSpeed = 90f;
+
     void Start()
     {
-        
+        startPos = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        float y =
+            Mathf.Sin(Time.time * floatSpeed)
+            * floatHeight;
+
+        transform.position =
+            startPos +
+            Vector3.up * y;
+
+        transform.Rotate(
+            Vector3.up,
+            rotateSpeed * Time.deltaTime,
+            Space.World
+        );
     }
 }
