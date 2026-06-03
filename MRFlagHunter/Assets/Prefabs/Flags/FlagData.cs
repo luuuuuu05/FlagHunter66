@@ -1,8 +1,33 @@
 using UnityEngine;
 
-public class FlagData : MonoBehaviour
+public class DoubleItemEffect : MonoBehaviour
 {
-    public string FlagID = "Gold";
+    private Vector3 startPos;
 
-    public int Score = 30;
+    public float floatHeight = 0.15f;
+    public float floatSpeed = 2f;
+
+    public float rotateSpeed = 90f;
+
+    void Start()
+    {
+        startPos = transform.position;
+    }
+
+    void Update()
+    {
+        float y =
+            Mathf.Sin(Time.time * floatSpeed)
+            * floatHeight;
+
+        transform.position =
+            startPos +
+            Vector3.up * y;
+
+        transform.Rotate(
+            Vector3.up,
+            rotateSpeed * Time.deltaTime,
+            Space.World
+        );
+    }
 }
