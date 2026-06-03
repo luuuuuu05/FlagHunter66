@@ -19,6 +19,9 @@ public class FlagCollector : MonoBehaviour
 
     void TryCollect()
     {
+        if (GameManager.Instance != null && !GameManager.Instance.IsPlaying)
+            return;
+
         Flag[] flags = FindObjectsOfType<Flag>();
 
         foreach (var flag in flags)
@@ -30,7 +33,12 @@ public class FlagCollector : MonoBehaviour
 
             if (distance < collectDistance)
             {
-                ScoreManager.Instance.AddScore(flag.score);
+                FlagType flagType = flag.GetComponent<FlagType>();
+                int scoreValue = flagType != null
+                    ? flagType.GetScore()
+                    : flag.score;
+
+                ScoreManager.Instance.AddScore(scoreValue);
 
                 Destroy(flag.gameObject);
 

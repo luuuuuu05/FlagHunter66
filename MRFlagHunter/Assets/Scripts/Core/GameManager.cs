@@ -4,15 +4,36 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager Instance;
+
+    [SerializeField] private GameTimer gameTimer;
+    [SerializeField] private ResultPanel resultPanel;
+    [SerializeField] private float gameDuration = 60f;
+
+    public bool IsPlaying { get; private set; }
+
+    private void Awake()
     {
-        
+        Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        gameTimer.OnTimeUp += EndGame;
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        IsPlaying = true;
+        ScoreManager.Instance.ResetScore();
+        gameTimer.StartTimer(gameDuration);
+        resultPanel.Hide();
+    }
+
+    public void EndGame()
+    {
+        IsPlaying = false;
+        resultPanel.Show(ScoreManager.Instance.Score);
     }
 }

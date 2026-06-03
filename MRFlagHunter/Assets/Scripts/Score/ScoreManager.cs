@@ -18,12 +18,18 @@ public class ScoreManager : MonoBehaviour
         HUDController.Instance.UpdateScore(0);
     }
 
+    public void ResetScore()
+    {
+        Score = 0;
+        HUDController.Instance.UpdateScore(0);
+    }
+
     public void AddScore(int value)
     {
         Score += value;
 
         HUDController.Instance.UpdateScore(Score);
 
-        Debug.Log("µ±Ç°·ÖÊı£º" + Score);
+        Debug.Log("å½“å‰åˆ†æ•°ï¼š" + Score);
     }
 }

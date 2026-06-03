@@ -8,6 +8,8 @@ public class FlagSpawner : MonoBehaviour
 
     public GameObject goldFlagPrefab;
 
+    public GameObject[] flagPrefabs;
+
     public Transform[] spawnPoints;
 
     private readonly List<GameObject> activeFlags =
@@ -31,9 +33,14 @@ public class FlagSpawner : MonoBehaviour
         Transform point =
             spawnPoints[index];
 
+        GameObject prefab =
+            flagPrefabs.Length > 0
+                ? flagPrefabs[Random.Range(0, flagPrefabs.Length)]
+                : goldFlagPrefab;
+
         GameObject flag =
             Instantiate(
-                goldFlagPrefab,
+                prefab,
                 point.position,
                 Quaternion.identity);
 
